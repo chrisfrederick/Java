@@ -22,9 +22,14 @@ public class BookController {
             @PathVariable(value = "bookId")Long bookID
             ){
         Book book = bookService.findBook(bookID);
-        List<Book> books = bookService.allBooks();
         model.addAttribute("book", book);
-        model.addAttribute("books", books);
         return "index.jsp";
+    }
+
+    @GetMapping("/books")
+    public String index(Model model){
+        List<Book> books = bookService.allBooks();
+        model.addAttribute("books", books);
+        return "books.jsp";
     }
 }
