@@ -1,58 +1,30 @@
 package com.codingdojo.mvc.controllers;
 
-
 import com.codingdojo.mvc.models.Book;
 import com.codingdojo.mvc.service.BookService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class BookController {
-    private final BookService bookService;
-    public BookController(BookService bookService){
-        this.bookService = bookService;
-    }
+    @Autowired
+    BookService bookService;
 
-    @GetMapping("/api/books")
-    public List<Book> index(){
-        return bookService.allBooks();
+    @GetMapping("/books/{bookId}")
+    public String getBookById(
+            Model model,
+            @PathVariable(value = "bookId")Long bookID
+            ){
+        Book book = bookService.findBook(bookID);
+        List<Book> books = bookService.allBooks();
+        model.addAttribute("book", book);
+        model.addAttribute("books", books);
+        return "index.jsp";
     }
-
-    @PostMapping("/api/books")
-    public Book create(
-            @RequestParam(value = "title") String title,
-            @RequestParam(value = "description")String description,
-            @RequestParam(value = "language")String language,
-            @RequestParam(value = "numberOfPages") Integer pages
-    ){
-        Book book = new Book(title, description, language, pages);
-        return bookService.createBook(book);
-    }
-
-    @GetMapping("/api/books/{id}")
-    public Book getBookById(@PathVariable("id") Long id){
-        Book book = bookService.findBook(id);
-        return book;
-    }
-
-    @PutMapping(value = "/api/books/{id}")
-    public Book update(
-            @PathVariable("id")Long id,
-            @RequestParam(value = "title")String title,
-            @RequestParam(value = "description")String description,
-            @RequestParam(value = "language")String language,
-            @RequestParam(value = "numberOfPages")Integer pages
-    ){
-        Book book = new Book(title, description, language, pages);
-        book.setId(id);
-        book = bookService.updateBook(book);
-        return book;
-    }
-
-    @DeleteMapping("/api/books/{id}")
-    public void deleteBookById(@PathVariable("id") Long id){
-        bookService.deleteBookById(id);
-    }
-
 }
