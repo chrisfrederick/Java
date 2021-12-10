@@ -16,12 +16,22 @@
         <th>Expense</th>
         <th>Vendor</th>
         <th>Amount</th>
+        <th>Actions</th>
     </tr>
     <c:forEach var="expense" items="${expense}">
     <tr>
-        <td>${expense.expenseName}</td>
+        <td><a href="/expense/${expense.id}">${expense.expenseName}</a></td>
         <td>${expense.vendor}</td>
-        <td>${expense.amount}</td>
+        <td>${expense.amount} </td>
+        <td>
+            <a href="/expense/edit/${expense.id}">edit</a>
+<%--            <a href="/expense/destroy/${expense.id}">delete</a>--%>
+            <form action="/expense/destroy/${expense.id}" method="post">
+                <input type="hidden" name="_method" value="delete">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+
     </tr>
     </c:forEach>
 </table>

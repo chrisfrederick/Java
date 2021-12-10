@@ -36,6 +36,7 @@
         <form:input  path="description"/>
     </p>
     <input type="submit" value="Submit"/>
+    <a href="/expense">Back</a>
 </form:form>
 </body>
 </html>
