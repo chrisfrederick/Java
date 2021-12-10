@@ -39,6 +39,7 @@ public class ExpenseService {
 
     //Updates an existing expense
     public Expense updateExpense(Expense expense){
+
         return expenseRepository.save(expense);
     }
 
