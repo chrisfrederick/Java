@@ -20,8 +20,9 @@
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <p><c:out value="${loggedout}"></c:out></p>
-    <h1>Login or Register</h1>
+    <p><c:out value="${loggedout}${notLoggedIn}"></c:out></p>
+    <h1>Book Club</h1>
+    <h3>A place for friends to share thoughts on books</h3>
     <form:form action="/register" method="post" modelAttribute="newUser">
         <div class="form-group">
             <label>User Name:</label>
@@ -59,6 +60,8 @@
         </div>
         <input type="submit" value="Login" class="btn btn-success" />
     </form:form>
+
+
 </body>
 </html>
 

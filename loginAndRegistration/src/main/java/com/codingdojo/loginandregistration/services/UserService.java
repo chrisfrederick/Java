@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,4 +51,19 @@ public class UserService {
             return user;
         }
     }
+
+    public User findUserById(Long id){
+        Optional<User> optionalUser = userRepo.findById(id);
+        if(optionalUser.isPresent()){
+            return optionalUser.get();
+        }else{
+            return null;
+        }
+    }
+
+    public List<User> findAll(){
+        return userRepo.findAll();
+    }
+
+
 }
